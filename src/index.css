@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    background-color: black;
+    color: aliceblue;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
