@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import MovieCard from "../components/TrendingMoviesCard";
-import { fetchPopular } from "../components/ApiFetchRandomMovie"
-
+import { fetchPopular } from "../components/ApiFetchMovie";
 
 export default function TrendingMovies() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["popularMovies"],
     queryFn: fetchPopular,
     select: (data) => data.results.slice(0, 12),
-    staleTime: 1000 * 60 * 5
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading || !data) return <div>Loading...</div>;

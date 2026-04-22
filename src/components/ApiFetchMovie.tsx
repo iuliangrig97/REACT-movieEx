@@ -29,3 +29,14 @@ export async function fetchPopular() {
 
   return res.json();
 }
+
+export async function fetchMovieDetails(id) {
+  const movieDetails = `${API_BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits`;
+  const res = await fetch(movieDetails, API_OPTIONS);
+
+  if (!res.ok) {
+    throw new Error("failed details");
+  }
+
+  return res.json();
+}
