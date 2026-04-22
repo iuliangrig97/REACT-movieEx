@@ -4,7 +4,7 @@ export default function TrendingMovies({
   index,
 }) {
   return (
-    <div className="p-6 relative">
+    <div className="p-6 relative flex justify-center items-center ml-6">
       <img
         src={poster_path ? `https://image.tmdb.org/t/p/w200/${poster_path}` : "no img"}
         alt={original_title}
