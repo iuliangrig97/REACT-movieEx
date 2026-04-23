@@ -2,15 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { fetchRandomMovie } from "../components/ApiFetchMovie";
 import { Link } from "react-router-dom";
+import type { Movie, MovieResponse } from "../types/movieTypes";
 
 export default function MovieApi() {
   const [page, setPage] = useState(() => Math.floor(Math.random() * 500) + 1);
   const [index, setIndex] = useState(0);
 
-  const { data, isLoading, error, isFetching } = useQuery({
-    queryKey: ["randomMovie", page],
-    queryFn: () => fetchRandomMovie(page),
-  });
+  const { data, isLoading, error, isFetching } = useQuery<MovieResponse, Movie>(
+    {
+      queryKey: ["randomMovie", page],
+      queryFn: () => fetchRandomMovie(page),
+    },
+  );
 
   const handleRefresh = () => {
     const newPage = Math.floor(Math.random() * 500) + 1;

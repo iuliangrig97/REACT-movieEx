@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import type { Movie } from "../types/movieTypes";
 
-export default function MovieCard({ original_title, poster_path, id }) {
+export default function MovieCard({ original_title, poster_path, id }: Movie) {
   return (
     <Link
       to={`/movie/${id}`}
@@ -15,7 +16,7 @@ export default function MovieCard({ original_title, poster_path, id }) {
           }
           alt={original_title}
         />
-        <p>{original_title}</p>
+        <p className="font-bold">{original_title}</p>
       </div>
     </Link>
   );

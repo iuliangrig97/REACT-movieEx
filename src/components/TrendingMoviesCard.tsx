@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+import type { Movie } from "../types/movieTypes";
+
+interface MovieCardProp extends Movie {
+  index: number;
+}
 
 export default function TrendingMovies({
   original_title,
   poster_path,
   index,
   id,
-}) {
+}: MovieCardProp) {
   return (
     <Link
       to={`/movie/${id}`}

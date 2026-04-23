@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchRandomMovie } from "../components/ApiFetchMovie";
 import { useState } from "react";
 import MovieCard from "../components/MovieCard";
+import type { Movie, MovieResponse } from "../types/movieTypes";
 
 export default function MoreRandomMovies() {
   const [page, setPage] = useState(() => Math.floor(Math.random() * 500) + 1);
@@ -11,9 +12,10 @@ export default function MoreRandomMovies() {
     isLoading,
     error,
     isFetching,
-  } = useQuery({
+  } = useQuery<MovieResponse, Error, Movie[]>({
     queryKey: ["moreRandomMovies", page],
     queryFn: () => fetchRandomMovie(page),
+    staleTime: 1000 * 60 * 5,
     select: (data) => {
       const allResults = data.results || [];
       const randomSort = allResults.sort(() => 0.5 - Math.random());
@@ -31,7 +33,7 @@ export default function MoreRandomMovies() {
 
   return (
     <div className="my-2">
-      <div className="flex items-center justify-center flex-col gap-2 mb-6">
+      <div className="flex items-center justify-center flex-col gap-2 mb-6 ">
         <h1 className="mt-12 text-white font-bold text-center text-3xl">
           🎭 More movies 🎭
         </h1>

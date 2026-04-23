@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { fetchMovieDetails } from "../components/ApiFetchMovie";
+import type { MovieDetailsResponse } from "../types/movieTypes.tsx";
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -9,9 +10,12 @@ export default function MovieDetails() {
     data: movie,
     isLoading,
     error,
-  } = useQuery({
+  } = useQuery<MovieDetailsResponse>({
     queryKey: ["movieDetails", id],
-    queryFn: () => fetchMovieDetails(id),
+    queryFn: () => {
+      if (!id) throw new Error("Movie ID is required");
+      return fetchMovieDetails(id);
+    },
   });
 
   if (isLoading || !movie) return <div>Loading...</div>;
@@ -37,12 +41,12 @@ export default function MovieDetails() {
       <div className="mx-auto flex flex-col items-center">
         <Link
           to={"/"}
-          className="cursor-pointer text-2xl bg-amber-50 rounded-2xl p-2 my-4"
+          className="cursor-pointer text-2xl bg-amber-50 rounded-2xl p-2 my-4 hover:scale-110"
         >
           🔙
         </Link>
         <div className="text-white flex flex-col items-center text-center mt-12">
-          <div className="flex flex-col xl:flex-row gap-5 xl:gap-[5rem] items-center">
+          <div className="flex flex-col xl:flex-row gap-5 xl:gap-20 items-center">
             <img
               src={
                 poster_path
