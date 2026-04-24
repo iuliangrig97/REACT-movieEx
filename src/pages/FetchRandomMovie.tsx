@@ -25,7 +25,15 @@ export default function MovieApi() {
     }
   };
 
-  if (isLoading || !data) return <div>Loading...</div>;
+  if (!data || isLoading) return (
+    <div className="relative cursor-pointer h-[50vh] md:h-[80vh] lg:h-[85vh] w-full overflow-hidden bg-black flex justify-center items-end">
+      <div className=" cursor-pointer text-white text-3xl mb-5 border border-white/30 rounded-4xl px-5">
+        <>
+          Rolling.. 🎲
+        </>
+      </div>
+    </div>
+  );
   if (error) return <div>Error: {error.message}</div>;
 
   const safeIndex = index % data?.results.length;
@@ -70,16 +78,12 @@ export default function MovieApi() {
         disabled={isFetching}
         className="group cursor-pointer text-white text-3xl mb-5 mt-8 border border-white/30 rounded-4xl px-5 dice transition duration-400 hover:scale-105"
       >
-        {isFetching ? (
-          "Loading.."
-        ) : (
-          <>
-            Random movie
-            <span className="inline-block transition-transform duration-1000 group-hover:rotate-280 ease-in-out">
-              🎲
-            </span>
-          </>
-        )}
+        <>
+          Random movie
+          <span className="inline-block transition-transform duration-1000 group-hover:rotate-280 ease-in-out">
+            🎲
+          </span>
+        </>
       </button>
     </main>
   );

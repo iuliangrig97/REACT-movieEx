@@ -46,13 +46,13 @@ export default function SearchMovie({
       <div className="flex flex-col items-center">
         <div className="border border-white/30 flex flex-row items-center text-xl rounded-2xl relative">
           <p className="opacity-60 mx-2">🔍</p>
-          <div className="relative">
+          <div className="relative ">
             <input
               type="text"
               placeholder="Search for a movie 🍿"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="focus:outline-none bg-transparent p-1"
+              className="focus:outline-none bg-transparent p-1 flex items-center justify-center text-center"
             />
             {isFetching && (
               <p className="absolute top-full left-0 text-sm text-gray-400 mt-1">

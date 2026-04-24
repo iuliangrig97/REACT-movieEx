@@ -28,27 +28,42 @@ export default function MoreRandomMovies() {
     setPage(newPage);
   };
 
-  if (isLoading || !movies) return <div>Loading...</div>;
+  const showSkeleton = isLoading && !movies;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="my-2">
-      <div className="flex items-center justify-center flex-col gap-2 mb-6 ">
+    <div className="my-2 min-h-[80vh]">
+      <div className="flex items-center justify-center flex-col gap-2 mb-6">
         <h1 className="mt-12 text-white font-bold text-center text-3xl">
           🎭 More movies 🎭
         </h1>
+
         <button
           onClick={handleRefresh}
-          className="block mx-auto mt-8 bg-blue-600 text-white px-4 py-2 rounded mb-6 cursor-pointer hover:scale-105"
+          disabled={isFetching}
+          className="block mx-auto mt-8 bg-blue-600 text-white px-4 py-2 rounded mb-6 cursor-pointer hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isFetching ? "Loading..." : "Click for more movies"}
+          {isFetching ? "Loading fresh movies..." : "Click for more movies"}
         </button>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-2">
-        {movies?.map((movie) => (
-          <MovieCard key={movie.id} {...movie} />
-        ))}
-      </div>
+      {showSkeleton ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-2">
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={i}
+              className="aspect-2/3 bg-white/10 animate-pulse rounded-xl"
+            />
+          ))}
+        </div>
+      ) : (
+        <div
+          className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-2 transition-opacity duration-300 ${isFetching ? "opacity-50" : "opacity-100"}`}
+        >
+          {movies?.map((movie) => (
+            <MovieCard key={movie.id} {...movie} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
