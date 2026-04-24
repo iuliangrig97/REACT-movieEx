@@ -34,7 +34,8 @@ export default function MovieApi() {
       </div>
     </div>
   );
-  if (error) return <div>Error: {error.message}</div>;
+  
+  if (error) return <div className="text-red-600">Error: {error.message}</div>;
 
   const safeIndex = index % data?.results.length;
   const movie = data?.results[safeIndex];

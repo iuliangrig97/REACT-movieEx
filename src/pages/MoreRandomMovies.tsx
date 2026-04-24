@@ -4,8 +4,10 @@ import { useState } from "react";
 import MovieCard from "../components/MovieCard";
 import type { Movie, MovieResponse } from "../types/movieTypes";
 
+let currentPage = Math.floor(Math.random() * 500) + 1;
+
 export default function MoreRandomMovies() {
-  const [page, setPage] = useState(() => Math.floor(Math.random() * 500) + 1);
+  const [page, setPage] = useState(currentPage);
 
   const {
     data: movies,
@@ -16,20 +18,20 @@ export default function MoreRandomMovies() {
     queryKey: ["moreRandomMovies", page],
     queryFn: () => fetchRandomMovie(page),
     staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 5,
     select: (data) => {
-      const allResults = data.results || [];
-      const randomSort = allResults.sort(() => 0.5 - Math.random());
-      return randomSort.slice(0, 20);
+      return data.results || [];
     },
   });
 
   const handleRefresh = () => {
     const newPage = Math.floor(Math.random() * 500) + 1;
+    currentPage = newPage
     setPage(newPage);
   };
 
   const showSkeleton = isLoading && !movies;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div className="text-red-600">Error: {error.message}</div>;
 
   return (
     <div className="my-2 min-h-[80vh]">
